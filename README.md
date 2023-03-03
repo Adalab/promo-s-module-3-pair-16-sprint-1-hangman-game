@@ -1,1 +1,1 @@
-# React Starter Kit
+# Juego del ahorcado
