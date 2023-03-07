@@ -2,11 +2,21 @@ import { useState } from 'react';
 import '../styles/App.scss';
 
 function App() {
-  let [numberOfErrors, setNumberOfErrors] = useState(0)
+  let [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState('');
 
   const handleClick = () => {
     setNumberOfErrors(numberOfErrors+1)
     console.log(numberOfErrors)
+  }
+
+  const handleLetter = (event) => {
+    const letterValue = event.target.value;
+    const includesLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g ;
+    console.log(letterValue.search(includesLetter));
+    if(letterValue.search(includesLetter)!== -1) {
+      setLastLetter(letterValue);
+    }
   }
 
   return (
@@ -50,6 +60,8 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              onChange = {handleLetter}
+              value = {lastLetter}
             />
           </form>
         </section>
