@@ -4,6 +4,8 @@ import '../styles/App.scss';
 function App() {
   let [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
+  const [word, setWord] = useState('pepino');
+  const [userLetters, setUserLetters] = useState([]);
 
   const handleClick = () => {
     setNumberOfErrors(numberOfErrors+1)
@@ -16,7 +18,15 @@ function App() {
     console.log(letterValue.search(includesLetter));
     if(letterValue.search(includesLetter)!== -1) {
       setLastLetter(letterValue);
+      setUserLetters(letterValue);
     }
+  }
+
+  const renderSolutionLetters = () => {
+    const wordLetters = word.split('');
+    return wordLetters.map((wordLetter, index) => (
+      <li key={index} className="letter">{wordLetter}</li>
+    )) 
   }
 
   return (
@@ -29,16 +39,7 @@ function App() {
           <div className="solution">
             <h2 className="title">Solución:</h2>
             <ul className="letters">
-              <li className="letter">k</li>
-              <li className="letter">a</li>
-              <li className="letter"></li>
-              <li className="letter">a</li>
-              <li className="letter">k</li>
-              <li className="letter">r</li>
-              <li className="letter"></li>
-              <li className="letter">k</li>
-              <li className="letter">e</li>
-              <li className="letter">r</li>
+              {renderSolutionLetters()}
             </ul>
           </div>
           <div className="error">
