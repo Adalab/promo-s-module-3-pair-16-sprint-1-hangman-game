@@ -4,7 +4,7 @@ import '../styles/App.scss';
 function App() {
   let [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
-  const [word, setWord] = useState('pepino');
+  const [word, setWord] = useState('katakroker');
   const [userLetters, setUserLetters] = useState([]);
 
   const handleClick = () => {
@@ -18,15 +18,34 @@ function App() {
     console.log(letterValue.search(includesLetter));
     if(letterValue.search(includesLetter)!== -1) {
       setLastLetter(letterValue);
-      setUserLetters(letterValue);
+      setUserLetters([...letterValue]);
     }
   }
 
   const renderSolutionLetters = () => {
     const wordLetters = word.split('');
-    return wordLetters.map((wordLetter, index) => (
-      <li key={index} className="letter">{wordLetter}</li>
-    )) 
+    /*
+    return wordLetters.map((wordLetter, index) => {
+      if(userLetters.includes(wordLetter)) {
+        return <li key={index} className="letter">{lastLetter}</li>
+      } else {
+        return <li key={index} className="letter"></li>
+      }
+      
+    })
+    */
+    return wordLetters.map((wordLetter, index) => 
+     <li key={index} className="letter">{ userLetters.includes(wordLetter) && wordLetter}</li>  
+    )
+  }
+
+  const renderErrorLetters = () => {
+    const filtersLetter = userLetters.filter((letter) => (
+     letter.includes(word)
+    ))
+     filtersLetter.map ( (filterLetter) => {
+      return <li className="letter">{filterLetter}</li>
+    })
   }
 
   return (
@@ -45,11 +64,7 @@ function App() {
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
             <ul className="letters">
-              <li className="letter">f</li>
-              <li className="letter">q</li>
-              <li className="letter">h</li>
-              <li className="letter">p</li>
-              <li className="letter">x</li>
+              {renderErrorLetters()}
             </ul>
           </div>
           <form className="form">
