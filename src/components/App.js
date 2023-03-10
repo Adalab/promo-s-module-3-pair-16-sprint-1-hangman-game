@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/App.scss';
+import callToApi from '../services/api';
 
 function App() {
   let [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
-  const [word, setWord] = useState('katakroker');
+  const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
-  let [filtersLetter, setFiltersLetter] = useState([])
+  let filtersLetter  = [];
+
+
+  useEffect(() => {
+    callToApi().then((response) => {
+      setWord(response)
+    })
+  }, [])
 
   const handleClick = () => {
     setNumberOfErrors(numberOfErrors+1)
