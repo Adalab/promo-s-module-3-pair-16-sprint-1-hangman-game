@@ -6,6 +6,7 @@ function App() {
   const [lastLetter, setLastLetter] = useState('');
   const [word, setWord] = useState('katakroker');
   const [userLetters, setUserLetters] = useState([]);
+  let [filtersLetter, setFiltersLetter] = useState([])
 
   const handleClick = () => {
     setNumberOfErrors(numberOfErrors+1)
@@ -18,7 +19,7 @@ function App() {
     console.log(letterValue.search(includesLetter));
     if(letterValue.search(includesLetter)!== -1) {
       setLastLetter(letterValue);
-      setUserLetters([...letterValue]);
+      setUserLetters([...userLetters,letterValue]);
     }
   }
 
@@ -40,11 +41,11 @@ function App() {
   }
 
   const renderErrorLetters = () => {
-    const filtersLetter = userLetters.filter((letter) => (
-     letter.includes(word)
+    filtersLetter = userLetters.filter((letter) => (
+     !word.includes(letter)
     ))
-     filtersLetter.map ( (filterLetter) => {
-      return <li className="letter">{filterLetter}</li>
+    return filtersLetter.map ( (filterLetter, index) => {
+      return <li key={index} className="letter">{filterLetter}</li>
     })
   }
 
@@ -81,7 +82,7 @@ function App() {
             />
           </form>
         </section>
-        <section className={"dummy error-"+ numberOfErrors}>
+        <section className={"dummy error-"+ filtersLetter.length}>
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
           <span className="error-11 line"></span>
